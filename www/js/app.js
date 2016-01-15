@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('technibuddy', ['ionic','LocalStorageModule'])
+var app = angular.module('technibuddy', ['ionic','LocalStorageModule','satellizer'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -27,26 +27,57 @@ var app = angular.module('technibuddy', ['ionic','LocalStorageModule'])
 });
 
 
-app.config(function(localStorageServiceProvider)
+app.config(function(localStorageServiceProvider,$stateProvider, $urlRouterProvider, $authProvider)
 {
+  // Satellizer configuration that specifies which API
+// route the JWT should be retrieved from
+$authProvider.loginUrl = 'http://localhost/technibuddy/public/api/authenticate';
+
+// Redirect to the auth state if any other states
+// are requested other than users
+$urlRouterProvider.otherwise('/');
+
+$stateProvider
+    .state('login', {
+        url: '/',
+        templateUrl: '../view/login.html',
+        controller: 'AuthController as auth'
+    })
+    .state('home', {
+        url: '/home',
+        templateUrl: '../view/home.html',
+       // controller: 'UserController as user'
+    });
+
   localStorageServiceProvider.setPrefix('technibuddy');
 });
 
+
+app.controller('AuthController', function($auth,$state)
+{
+
+  var vm = this;
+
+  vm.login = function()
+  {
+
+      var credentials = { username: vm.username , password: vm.password};
+
+      $auth.login(credentials).then(function(data)
+      {
+         console.log(data);
+         $state.go('home', {});
+      });
+  }
+
+
+});
 app.controller('main', function($scope,$http, $ionicModal, localStorageService)
 {
 
     
-    $scope.pools = [];
-
-    $http.get('http://localhost/technibuddy/public/api/pool').
-    success(function(data,status,headers,config)
-    {
-      console.log(status);
-      $scope.pools = data;
-    });
-
-    console.log($scope.pools);
-
+   
+/*
 
 
   var taskData = 'task';
@@ -112,5 +143,5 @@ app.controller('main', function($scope,$http, $ionicModal, localStorageService)
     localStorageService.set(taskData, $scope.tasks);
   }
 
-
+  */
 });
