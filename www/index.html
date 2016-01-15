@@ -14,7 +14,7 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-
+  
     <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -24,16 +24,21 @@
     <script src="js/app.js"></script>
   </head>
   <body ng-app="technibuddy" ng-controller="main" ng-init="getTasks()">
-    <span>Test</span>
+
+
     <ion-pane>
+
       <ion-header-bar class="bar-dark">
-        <h1 class="title">Technibuddy</h1>
+        <h1 class="title"><i class="icon ion-beer custom-icon"></i> Technibuddy</h1>
         <button class="button button-icon" ng-click="openTaskModal()">
           <i class="icon ion-compose"></i>
         </button>
       </ion-header-bar>
       <ion-content>
         
+       
+   
+
        <div class="list card" ng-repeat="task in tasks track by $index">
             <div class="item item-divider">
                 <span ng-bind="task.title"></span>
@@ -61,6 +66,15 @@
       </ion-content>
       
     </ion-pane>
+
+
+
+
+
+
+
+
+
 
        <script id="new-task-modal.html" type="text/ng-template">
         <ion-modal-view>

@@ -22,6 +22,9 @@ var app = angular.module('technibuddy', ['ionic','LocalStorageModule'])
     }
   });
 })
+.constant('ApiEndpoint', {
+  url: 'http://localhost/technibuddy/api/'
+});
 
 
 app.config(function(localStorageServiceProvider)
@@ -29,8 +32,23 @@ app.config(function(localStorageServiceProvider)
   localStorageServiceProvider.setPrefix('technibuddy');
 });
 
-app.controller('main', function($scope, $ionicModal, localStorageService)
+app.controller('main', function($scope,$http, $ionicModal, localStorageService)
 {
+
+    
+    $scope.pools = [];
+
+    $http.get('http://localhost/technibuddy/public/api/pool').
+    success(function(data,status,headers,config)
+    {
+      console.log(status);
+      $scope.pools = data;
+    });
+
+    console.log($scope.pools);
+
+
+
   var taskData = 'task';
   $scope.tasks = [];
 
