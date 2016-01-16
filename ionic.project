@@ -1,9 +1,5 @@
 {
   "name": "Technibuddy",
-  "app_id": "",
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "localhost/technibuddy/api/"
-    }]
+  "app_id": ""
+ 
 }

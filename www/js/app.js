@@ -3,11 +3,14 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('technibuddy', ['ionic','LocalStorageModule','satellizer'])
+var app = angular.module('technibuddy', ['ionic','LocalStorageModule','satellizer','ngCordova'])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
+  $ionicPlatform.ready(function() 
+  {
+    /*
+    if(window.cordova && window.cordova.plugins.Keyboard) 
+    {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -16,7 +19,7 @@ var app = angular.module('technibuddy', ['ionic','LocalStorageModule','satellize
       // from snapping when text inputs are focused. Ionic handles this internally for
       // a much nicer keyboard experience.
       cordova.plugins.Keyboard.disableScroll(true);
-    }
+    }*/
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -36,106 +39,41 @@ $authProvider.loginUrl = 'http://technibuddy.myssc.zz.vc/public/api/authenticate
 
 // Redirect to the auth state if any other states
 // are requested other than users
-$urlRouterProvider.otherwise('/');
+
 
 $stateProvider
     .state('login', {
         url: '/',
-        templateUrl: '../view/login.html',
+        templateUrl: 'templates/login.html',
         controller: 'AuthController as auth'
     })
     .state('home', {
         url: '/home',
-        templateUrl: '../view/home.html',
+        templateUrl: 'templates/home.html',
         controller: 'UserController as user'
-    });
-
-  //localStorageServiceProvider.setPrefix('technibuddy');
-});
-
-
-
-
-app.controller('AuthController', function($auth,$state,$http, $rootScope)
-{
-
-  var vm = this;
-
-  vm.login = function()
-  {
-
-      var credentials = { username: vm.username , password: vm.password};
-
-      $auth.login(credentials).then(function(data)
+    })
+    .state('capture',
       {
-         return $http.get('http://technibuddy.myssc.zz.vc/public/api/getUserData?token='+$auth.getToken());
-        
-       // Handle errors
-        }, function(error) {
-            vm.loginError = true;
-            vm.loginErrorText = error.data.error;
+         url: '/capture',
+         templateUrl: 'templates/capture.html',
+         controller: 'PictureCtrl'
+      });
 
-        // Because we returned the $http.get request in the $auth.login
-        // promise, we can chain the next promise to the end here
-        }).then(function(response) {
+  $urlRouterProvider.otherwise('/');
 
-            // Stringify the returned data to prepare it
-            // to go into local storage
-            var user = JSON.stringify(response.data.user);
-
-            // Set the stringified user data into local storage
-            localStorage.setItem('user', user);
-
-            // The user's authenticated state gets flipped to
-            // true so we can now show parts of the UI that rely
-            // on the user being logged in
-            $rootScope.authenticated = true;
-
-            // Putting the user's data on $rootScope allows
-            // us to access it anywhere across the app
-            $rootScope.currentUser = response.data.user;
-            console.log( $rootScope.currentUser);
-            // Everything worked out so we can now redirect to
-            // the users state to view the data
-             $state.go('home', {});
-        });;
-  }
-
-
+  localStorageServiceProvider.setPrefix('technibuddy');
 });
 
-app.controller('UserController', function($http,$auth,$scope)
-{
- 
-  $scope.isAuthenticated = function() {
-    console.log( 'test');
-  };
-    var vm = this;
 
-    vm.users;
-    vm.error;
-  
 
-    vm.getUsers = function()
-    {
-       $http.get('http://technibuddy.myssc.zz.vc/public/api/authenticate?token='+$auth.getToken()).success(function(users)
-       {
-          vm.users = users;
-       }).error(function(error)
-       {
-          vm.error = error;
-          console.log(error);
-       });
 
-    }
-});
-
+/*
 app.controller('main', function($scope,$http, $ionicModal, localStorageService)
 {
 
     
    
-/*
+
 
 
   var taskData = 'task';
@@ -201,5 +139,5 @@ app.controller('main', function($scope,$http, $ionicModal, localStorageService)
     localStorageService.set(taskData, $scope.tasks);
   }
 
-  */
-});
+
+});  */

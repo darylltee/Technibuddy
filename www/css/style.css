@@ -7,7 +7,7 @@
 .login-container {
     display: -webkit-flex;
     -webkit-flex-direction: column;
-    height: 100%;
+    height: 100% !important;
     background: #c2e59c; /* fallback for old browsers */
 	background: #55efcb;
     background: -moz-linear-gradient(top, #55efcb 0%, #5bcaff 100%);
@@ -17,6 +17,11 @@
     background: -ms-linear-gradient(top, #55efcb 0%,#5bcaff 100%);
     background: linear-gradient(to bottom, #55efcb 0%,#5bcaff 100%);
 }
-.login-container > .button-row img {
-    max-width: 80%;
+
+.spinner svg {
+  width: 28px;
+  height: 28px;
+  stroke: #444;
+  fill: #444;
 }
+
