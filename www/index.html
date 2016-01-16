@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy"/>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
@@ -14,7 +15,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     
-    <script src="js/satellizer.min.js"></script>
+    <script src="lib/satellizer/satellizer.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -28,11 +29,7 @@
 
   <body ng-app="technibuddy" ng-controller="main" ng-init="getTasks()">
    
-    <ion-nav-bar align-title="center" class="bar-dark nav-title-slide-ios7">
-        <ion-nav-back-button class="button-clear">
-          <i class="ion-arrow-left-c"></i> Back
-        </ion-nav-back-button>
-    </ion-nav-bar>
+    
 
     <ion-nav-view></ion-nav-view>
 

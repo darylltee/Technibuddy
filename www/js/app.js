@@ -23,15 +23,16 @@ var app = angular.module('technibuddy', ['ionic','LocalStorageModule','satellize
   });
 })
 .constant('ApiEndpoint', {
-  url: 'http://localhost/technibuddy/api/'
+  url: 'http://technibuddy.myssc.zz.vc/public/api'
 });
+
 
 
 app.config(function(localStorageServiceProvider,$stateProvider, $urlRouterProvider, $authProvider)
 {
   // Satellizer configuration that specifies which API
 // route the JWT should be retrieved from
-$authProvider.loginUrl = 'http://localhost/technibuddy/public/api/authenticate';
+$authProvider.loginUrl = 'http://technibuddy.myssc.zz.vc/public/api/authenticate';
 
 // Redirect to the auth state if any other states
 // are requested other than users
@@ -46,14 +47,16 @@ $stateProvider
     .state('home', {
         url: '/home',
         templateUrl: '../view/home.html',
-       // controller: 'UserController as user'
+        controller: 'UserController as user'
     });
 
-  localStorageServiceProvider.setPrefix('technibuddy');
+  //localStorageServiceProvider.setPrefix('technibuddy');
 });
 
 
-app.controller('AuthController', function($auth,$state)
+
+
+app.controller('AuthController', function($auth,$state,$http, $rootScope)
 {
 
   var vm = this;
@@ -65,13 +68,68 @@ app.controller('AuthController', function($auth,$state)
 
       $auth.login(credentials).then(function(data)
       {
-         console.log(data);
-         $state.go('home', {});
-      });
+         return $http.get('http://technibuddy.myssc.zz.vc/public/api/getUserData?token='+$auth.getToken());
+        
+       // Handle errors
+        }, function(error) {
+            vm.loginError = true;
+            vm.loginErrorText = error.data.error;
+
+        // Because we returned the $http.get request in the $auth.login
+        // promise, we can chain the next promise to the end here
+        }).then(function(response) {
+
+            // Stringify the returned data to prepare it
+            // to go into local storage
+            var user = JSON.stringify(response.data.user);
+
+            // Set the stringified user data into local storage
+            localStorage.setItem('user', user);
+
+            // The user's authenticated state gets flipped to
+            // true so we can now show parts of the UI that rely
+            // on the user being logged in
+            $rootScope.authenticated = true;
+
+            // Putting the user's data on $rootScope allows
+            // us to access it anywhere across the app
+            $rootScope.currentUser = response.data.user;
+            console.log( $rootScope.currentUser);
+            // Everything worked out so we can now redirect to
+            // the users state to view the data
+             $state.go('home', {});
+        });;
   }
 
 
 });
+
+app.controller('UserController', function($http,$auth,$scope)
+{
+ 
+  $scope.isAuthenticated = function() {
+    console.log( 'test');
+  };
+    var vm = this;
+
+    vm.users;
+    vm.error;
+  
+
+    vm.getUsers = function()
+    {
+       $http.get('http://technibuddy.myssc.zz.vc/public/api/authenticate?token='+$auth.getToken()).success(function(users)
+       {
+          vm.users = users;
+       }).error(function(error)
+       {
+          vm.error = error;
+          console.log(error);
+       });
+
+    }
+});
+
 app.controller('main', function($scope,$http, $ionicModal, localStorageService)
 {
 
