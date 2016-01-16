@@ -70,18 +70,7 @@
   <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
 
 
-   <!-- PhoneGap plugins for PhoneGap Build to attach to build -->
-  <gap:plugin name="org.apache.cordova.device" version="0.2.12" source="pgb" />
-  <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" source="pgb" />
-  <gap:plugin name="org.apache.cordova.splashscreen" version="0.3.4" source="pgb" />
-
-  <!-- Use the newest version of PhoneGap -->
-  <preference name="phonegap-version" value="3.6.3" />
-
-  <!-- Device permission is needed -->
-  <feature name="http://api.phonegap.com/1.0/device"/>
-
   <!-- Splash icon is on same directory as this file -->
   <gap:splash src="splash.png" />
-  
+
 </widget>
