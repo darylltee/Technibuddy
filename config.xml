@@ -1,5 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.technibuddy257102" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+     <preference name="loglevel" value="DEBUG" />
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Keyboard">
+        <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <name>Technibuddy</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -68,11 +92,5 @@
         <splash height="480" src="resources\ios\splash\Default~iphone.png" width="320" />
     </platform>
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
-    <plugin name="cordova-plugin-device" spec="~1.1.0" />
-    <plugin name="cordova-plugin-console" spec="~1.0.2" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="~3.0.0" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
-    <plugin name="ionic-plugin-keyboard" spec="~1.0.8" />
-    <plugin name="cordova-plugin-camera" spec="~1.2.0" />
+    
 </widget>
