@@ -70,7 +70,5 @@
   <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
 
 
-  <!-- Splash icon is on same directory as this file -->
-  <gap:splash src="splash.png" />
-
+  
 </widget>
